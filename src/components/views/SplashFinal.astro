@@ -8,10 +8,10 @@ interface Props {
 
 const { data } = Astro.props;
 
-const estudioVideo = '/hero/estudio.mp4';
-const estudioPoster = '/hero/estudio-poster.jpg';
-const tiendaImage = '/hero/tienda.webp';
-const tiendaAlt = 'Mueble TV de Niza Tienda — pieza en madera natural sobre pared de hormigón.';
+const estudioVideo = data.estudio.videoUrl ?? '/hero/estudio.mp4';
+const estudioPoster = data.estudio.posterUrl ?? '/hero/estudio-poster.jpg';
+const tiendaImage = data.tienda.imagenUrl ?? '/hero/tienda.webp';
+const tiendaAlt = data.tienda.imagenAlt ?? 'Mueble TV de Niza Tienda — pieza en madera natural sobre pared de hormigón.';
 ---
 
 <h1 class="sr-only">Niza Interiores · Diseño de interiores y muebles en Córdoba</h1>

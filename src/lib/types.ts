@@ -4,6 +4,10 @@ export interface PortalContent {
   description?: string;
   cta?: string;
   url: string;
+  videoUrl?: string;
+  posterUrl?: string;
+  imagenUrl?: string;
+  imagenAlt?: string;
 }
 
 export interface FooterContent {

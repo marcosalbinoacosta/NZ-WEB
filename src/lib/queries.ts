@@ -12,14 +12,18 @@ const splashQuery = /* groq */ `
       "title": estudio.title,
       "description": estudio.description,
       "cta": estudio.cta,
-      "url": estudio.url
+      "url": estudio.url,
+      "videoUrl": estudio.video.asset->url,
+      "posterUrl": estudio.poster.asset->url
     },
     "tienda": {
       "label": tienda.label,
       "title": tienda.title,
       "description": tienda.description,
       "cta": tienda.cta,
-      "url": tienda.url
+      "url": tienda.url,
+      "imagenUrl": tienda.imagen.asset->url,
+      "imagenAlt": tienda.imagen.alt
     },
     "footer": {
       "address": footer.address,

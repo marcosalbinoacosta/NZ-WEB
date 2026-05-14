@@ -57,14 +57,47 @@ export const splash = defineType({
       title: 'Puerta · Estudio',
       type: 'object',
       group: 'puertas',
-      fields: portalFields(),
+      fields: [
+        ...portalFields(),
+        defineField({
+          name: 'video',
+          title: 'Video de fondo',
+          type: 'file',
+          description: 'MP4. Si no se sube, se usa el video por defecto.',
+          options: { accept: 'video/mp4' },
+        }),
+        defineField({
+          name: 'poster',
+          title: 'Imagen poster del video',
+          type: 'image',
+          description: 'Se muestra mientras carga el video. Si no se sube, se usa la imagen por defecto.',
+          options: { hotspot: true },
+        }),
+      ],
     }),
     defineField({
       name: 'tienda',
       title: 'Puerta · Tienda',
       type: 'object',
       group: 'puertas',
-      fields: portalFields(),
+      fields: [
+        ...portalFields(),
+        defineField({
+          name: 'imagen',
+          title: 'Imagen de fondo',
+          type: 'image',
+          description: 'Si no se sube, se usa la imagen por defecto.',
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Texto alternativo (accesibilidad)',
+              type: 'string',
+              validation: (R) => R.max(125),
+            }),
+          ],
+        }),
+      ],
     }),
 
     defineField({
