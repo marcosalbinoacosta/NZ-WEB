@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nizainteriores.com.ar/sitemap-index.xml

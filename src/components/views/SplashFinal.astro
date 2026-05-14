@@ -1,0 +1,325 @@
+---
+import type { SplashSettings } from '@/lib/types';
+import nizaLogoSvg from '@/assets/niza-interiores.svg?raw';
+
+interface Props {
+  data: SplashSettings;
+}
+
+const { data } = Astro.props;
+
+const estudioVideo = '/hero/estudio.mp4';
+const estudioPoster = '/hero/estudio-poster.jpg';
+const tiendaImage = '/hero/tienda.webp';
+const tiendaAlt = 'Mueble TV de Niza Tienda — pieza en madera natural sobre pared de hormigón.';
+---
+
+<h1 class="sr-only">Niza Interiores · Diseño de interiores y muebles en Córdoba</h1>
+
+<nav class="splash" aria-label="Acceso a las unidades de Niza">
+  <a
+    class="panel panel--estudio"
+    href={data.estudio.url}
+    rel="noopener"
+    aria-label={`${data.estudio.title} — ir al estudio de diseño`}
+  >
+    <div class="panel__media">
+      <video
+        class="panel__video"
+        src={estudioVideo}
+        poster={estudioPoster}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      ></video>
+    </div>
+    <div class="panel__overlay" aria-hidden="true"></div>
+    <div class="panel__label panel__label--below">
+      <span>{data.estudio.title}</span>
+    </div>
+  </a>
+
+  <a
+    class="panel panel--tienda"
+    href={data.tienda.url}
+    rel="noopener"
+    aria-label={`${data.tienda.title} — ir a la tienda de muebles`}
+  >
+    <div class="panel__media">
+      <div class="panel__img-wrap">
+        <img
+          class="panel__img"
+          src={tiendaImage}
+          alt={tiendaAlt}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+    <div class="panel__overlay" aria-hidden="true"></div>
+    <div class="panel__label panel__label--above">
+      <span>{data.tienda.title}</span>
+    </div>
+  </a>
+</nav>
+
+<div class="loader-reveal" aria-hidden="true">
+  <div class="loader-reveal__half loader-reveal__half--first"></div>
+  <div class="loader-reveal__half loader-reveal__half--second"></div>
+  <div class="loader-reveal__logo">
+    <div class="loader-reveal__logo-inner" set:html={nizaLogoSvg} />
+  </div>
+</div>
+
+<style>
+  :global(html, body) {
+    overflow: hidden;
+    background: #2c2c2c;
+  }
+
+  /* ===== Splash (idéntica a SplashFinal) ===== */
+  .splash {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+    background: #2c2c2c;
+  }
+  @media (min-width: 768px) {
+    .splash {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+  }
+
+  .panel {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    isolation: isolate;
+    cursor: pointer;
+  }
+  .panel:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.95);
+  }
+
+  .panel__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .panel__video,
+  .panel__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%) brightness(0.82) contrast(0.98);
+    transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .panel__img-wrap {
+    position: absolute;
+    inset: 0;
+    animation: ken-burns 3.5s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes ken-burns {
+    0%   { transform: scale(1.04) translate(3%,  1.5%) rotate(0deg);   }
+    100% { transform: scale(1.24) translate(-4%, -2%)  rotate(0.6deg); }
+  }
+
+  .panel__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(35, 35, 35, 0.52);
+    pointer-events: none;
+    transition: background-color 600ms ease;
+  }
+
+  .panel__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+    padding: 0 1.5rem;
+  }
+  .panel__label span {
+    display: inline-block;
+    font-family: var(--font-condensed);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 3.4vw, 2.75rem);
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-shadow: 0 1px 18px rgba(0, 0, 0, 0.42);
+    white-space: nowrap;
+    padding: 0.18em 0;
+  }
+  .panel__label--below span {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.92);
+  }
+  .panel__label--above span {
+    border-top: 1px solid rgba(255, 255, 255, 0.92);
+  }
+
+  @media (hover: hover) {
+    .panel:hover .panel__video,
+    .panel:hover .panel__img {
+      transform: scale(1.04);
+    }
+    .panel:hover .panel__overlay {
+      background: rgba(35, 35, 35, 0.32);
+    }
+    .splash:has(.panel--estudio:hover) .panel--tienda .panel__overlay,
+    .splash:has(.panel--tienda:hover) .panel--estudio .panel__overlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel__video,
+    .panel__img {
+      transition: none;
+    }
+    .panel__img-wrap {
+      animation: none;
+    }
+  }
+
+  /* ===== Loader "Reveal" =====
+     1. Logo fade-in
+     2. Línea fina blanca se dibuja en el eje de división
+     3. Hold breve
+     4. Las dos mitades grises se deslizan en direcciones opuestas
+        revelando la splash. Logo y línea se desvanecen en simultáneo. */
+
+  .loader-reveal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  /* Las dos mitades — comparten color de fondo, sin seam visible */
+  .loader-reveal__half {
+    position: absolute;
+    background: #5e5e5d;
+    /* Mobile por defecto: stacked vertical (split horizontal) */
+    left: 0;
+    width: 100%;
+    height: 50%;
+    will-change: transform;
+  }
+  .loader-reveal__half--first {
+    top: 0;
+    animation: half-out-up 850ms cubic-bezier(0.76, 0, 0.24, 1) 1300ms forwards;
+  }
+  .loader-reveal__half--second {
+    bottom: 0;
+    animation: half-out-down 850ms cubic-bezier(0.76, 0, 0.24, 1) 1300ms forwards;
+  }
+
+  @media (min-width: 768px) {
+    /* Desktop: split vertical (lado a lado) */
+    .loader-reveal__half {
+      top: 0;
+      left: auto;
+      width: 50%;
+      height: 100%;
+      bottom: auto;
+    }
+    .loader-reveal__half--first {
+      left: 0;
+      animation: half-out-left 850ms cubic-bezier(0.76, 0, 0.24, 1) 1300ms forwards;
+    }
+    .loader-reveal__half--second {
+      right: 0;
+      animation: half-out-right 850ms cubic-bezier(0.76, 0, 0.24, 1) 1300ms forwards;
+    }
+  }
+
+  @keyframes half-out-up   { to { transform: translateY(-100%); } }
+  @keyframes half-out-down { to { transform: translateY(100%);  } }
+  @keyframes half-out-left  { to { transform: translateX(-100%); } }
+  @keyframes half-out-right { to { transform: translateX(100%);  } }
+
+  /* Logo wordmark — fade in al inicio, fade out al separarse las mitades */
+  .loader-reveal__logo {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .loader-reveal__logo-inner {
+    width: clamp(11rem, 26vw, 22rem);
+    opacity: 0;
+    animation:
+      reveal-logo-in 500ms ease-out 50ms forwards,
+      reveal-logo-out 400ms ease-out 850ms forwards;
+    will-change: opacity, transform;
+  }
+  .loader-reveal__logo-inner :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @keyframes reveal-logo-in { to { opacity: 1; } }
+  @keyframes reveal-logo-out {
+    to { opacity: 0; transform: scale(0.94); }
+  }
+
+  /* prefers-reduced-motion: salta la coreografía, simplemente fade rápido. */
+  @media (prefers-reduced-motion: reduce) {
+    .loader-reveal__half--first,
+    .loader-reveal__half--second {
+      animation: reveal-quick-out 250ms ease 500ms forwards;
+    }
+    .loader-reveal__logo-inner {
+      animation:
+        reveal-logo-in 200ms ease forwards,
+        reveal-quick-out 250ms ease 500ms forwards;
+    }
+    @keyframes reveal-quick-out { to { opacity: 0; } }
+  }
+</style>
+
+<script is:inline>
+  document.querySelectorAll('video').forEach((v) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.removeAttribute('autoplay');
+      v.pause();
+    } else {
+      v.playbackRate = 0.65;
+    }
+  });
+</script>

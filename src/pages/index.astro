@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SplashFinal from '@/components/views/SplashFinal.astro';
+import { getSplash } from '@/lib/queries';
+import { buildLocalBusinessJsonLd } from '@/lib/seo';
+
+const data = await getSplash();
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const jsonLd = buildLocalBusinessJsonLd({ data, siteUrl, ogImageUrl: null });
+---
+
+<BaseLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  bodyClass="theme-final"
+  jsonLd={jsonLd}
+  noindex
+>
+  <SplashFinal data={data} />
+</BaseLayout>
