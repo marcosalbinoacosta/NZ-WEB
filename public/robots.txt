@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nizainteriores.com.ar/sitemap-index.xml
+Sitemap: https://nizaequipamientos.com.ar/sitemap-index.xml

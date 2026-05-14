@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-const SITE = process.env.PUBLIC_SITE_URL ?? 'https://nizainteriores.com.ar';
+const SITE = process.env.PUBLIC_SITE_URL ?? 'https://nizaequipamientos.com.ar';
 
 export default defineConfig({
   site: SITE,
