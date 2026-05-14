@@ -43,6 +43,10 @@ const splashQuery = /* groq */ `
 
 export async function getSplash(): Promise<SplashSettings> {
   if (!isSanityConfigured) return fallbackSplash;
-  const data = await sanity.fetch<SplashSettings | null>(splashQuery);
-  return data ?? fallbackSplash;
+  try {
+    const data = await sanity.fetch<SplashSettings | null>(splashQuery);
+    return data ?? fallbackSplash;
+  } catch {
+    return fallbackSplash;
+  }
 }
