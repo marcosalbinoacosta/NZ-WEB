@@ -6,4 +6,7 @@ export default defineCliConfig({
     dataset: 'production',
   },
   studioHost: 'niza',
+  deployment: {
+    appId: 'uth8j0hm9vs2bv8u1nenm5ik',
+  },
 });
