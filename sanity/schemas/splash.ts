@@ -25,7 +25,7 @@ export const splash = defineType({
       type: 'string',
       group: 'contenido',
       description: 'Aparece como título grande junto a la imagen.',
-      validation: (R) => R.required().max(80),
+      validation: (R) => R.max(80),
     }),
     defineField({
       name: 'intro',
@@ -34,7 +34,7 @@ export const splash = defineType({
       rows: 3,
       group: 'contenido',
       description: 'Breve párrafo bajo el tagline. Hasta ~200 caracteres.',
-      validation: (R) => R.required().max(220),
+      validation: (R) => R.max(220),
     }),
     defineField({
       name: 'hero',
@@ -139,13 +139,13 @@ function portalFields() {
       title: 'Descripción',
       type: 'text',
       rows: 3,
-      validation: (R) => R.required().max(220),
+      validation: (R) => R.max(220),
     }),
     defineField({
       name: 'cta',
       title: 'Texto del botón',
       type: 'string',
-      validation: (R) => R.required().max(30),
+      validation: (R) => R.max(30),
     }),
     defineField({
       name: 'url',
